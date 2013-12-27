@@ -10,11 +10,11 @@ Tk::Markdown - display markdown in a Text
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 =head1 SYNOPSIS
@@ -46,35 +46,16 @@ Construct Tk::Widget 'Markdown';
 
 ### these few subs are taken directly from ROText...
 
-sub clipEvents
-{
-  return qw[Copy];
-}
+=head2 defaultStyles 
 
-sub ClassInit
-{
-  my ($class,$mw) = @_;
-  my $val = $class->bindRdOnly($mw);
-  my $cb = $mw->bind($class,'<Next>');
-  $mw->bind($class,'<space>',$cb) if (defined $cb);
-  $cb = $mw->bind($class,'<Prior>');
-  $mw->bind($class,'<BackSpace>', $cb) if (defined $cb);
-  $class->clipboardOperations($mw,'Copy');
-  return $val;
-}
+Called internally.  You can access the styles like this:
 
-sub Populate
-{
-  my ($self,$args) = @_;
-  $self->SUPER::Populate($args);
-  my $m = $self->menu->entrycget($self->menu->index('Search'), '-menu');
-  $m->delete($m->index('Replace'));
-  $self->ConfigSpecs(-background=>['SELF'], -foreground=>['SELF'],);
-  $self->defaultStyles(); ### Jimi added this line... does a bit more setup.
-}
+	use Data::Dumper;
+	print Dumper $o->{styles};
 
-sub Tk::Widget::ScrlMarkdown { shift->Scrolled('Markdown' => @_) }
+To set styles, use $o->setStyles
 
+=cut
 
 ### named styles, used in _rules_ below.
 sub defaultStyles { 
@@ -104,6 +85,35 @@ sub defaultStyles {
   $self->setStyles(%ss);
 }
 
+
+=head2 setStyles
+
+The argument is a hash of styles.  The keys are predefined names, currently:
+
+=over
+
+=item body
+=item h1
+=item h2
+=item h3
+=item h4
+=item h5
+=item h6
+=item code
+=item list
+
+=back
+
+and the values are listrefs, in which the first element is the -foreground color, and 
+the remainder are options for the Tk::Font object.  For example:
+
+	$o->setStyles(
+		'h1' => [ qw/ red -family Times -weight bold -size 32 / ],
+	)
+
+=cut
+
+
 ### add styles as tags to the text
 sub setStyles {
   my ($self,%styles) = @_;
@@ -131,6 +141,11 @@ sub insert
   return $res;
 }
 
+=head2 FormatMarkdown
+
+This is called internally.  It prettifies markdown.
+
+=cut
 
 ### reformat the text of certain markdown components to make them prettier...
 sub FormatMarkdown
@@ -152,6 +167,12 @@ sub FormatMarkdown
   $markdown = join("\n", @lines);
   return $markdown;
 }
+
+=head2 FormatMarkdownTable
+
+This is called internally.  It prettifies markdown tables.
+
+=cut
 
 ### reformat the text of tables to make them prettier...
 sub FormatMarkdownTable {
@@ -194,6 +215,13 @@ sub FormatMarkdownTable {
   return @table;
 }
 
+=head2 PaintMarkdown
+
+This is call internally.  It applies the styles.
+
+=cut
+
+
 
 ### Add tags and substitute some characters to format the markdown.
 sub PaintMarkdown
@@ -231,6 +259,18 @@ sub PaintMarkdown
   }
 }
 
+=head2 TransformTk
+
+This is not called internally, and is scheduled for removal to another module 
+(Tk::MarkdownTk).  It parses out HTML-like tags that define Widgets to be drawn
+in the text.
+
+eg
+
+	<Tk::Button -text="Click Me">
+
+=cut
+
 ### look for <tags> (the other kind of tags) to be tranformed into actual widgets
 sub TransformTk {
   my $self = shift;
@@ -265,6 +305,12 @@ sub TransformTk {
   }
 }
 
+=head2 parseAttrs
+
+A helper function for TransformTk.
+
+=cut
+
 ### parse some attributes
 sub parseAttrs {
   my ($attrs) = @_;
@@ -283,6 +329,62 @@ sub parseAttrs {
   }
   return %attrs;
 }
+
+
+=head2 clipEvents
+
+This copied directly from Tk::ROText
+
+=cut
+
+sub clipEvents
+{
+  return qw[Copy];
+}
+
+=head2 ClassInit
+
+This is copied directly from Tk::ROText.
+
+=cut
+
+sub ClassInit
+{
+  my ($class,$mw) = @_;
+  my $val = $class->bindRdOnly($mw);
+  my $cb = $mw->bind($class,'<Next>');
+  $mw->bind($class,'<space>',$cb) if (defined $cb);
+  $cb = $mw->bind($class,'<Prior>');
+  $mw->bind($class,'<BackSpace>', $cb) if (defined $cb);
+  $class->clipboardOperations($mw,'Copy');
+  return $val;
+}
+
+=head2 Populate
+
+This is copied and modified from Tk::ROText.  The modification is the addition
+of a call to setDefaultStyles.  That's all.
+
+=cut
+
+sub Populate
+{
+  my ($self,$args) = @_;
+  $self->SUPER::Populate($args);
+  my $m = $self->menu->entrycget($self->menu->index('Search'), '-menu');
+  $m->delete($m->index('Replace'));
+  $self->ConfigSpecs(-background=>['SELF'], -foreground=>['SELF'],);
+  $self->defaultStyles(); ### Jimi added this line... does a bit more setup.
+}
+
+
+=head2 Tk::Widget::ScrlMardown
+
+Copied and adapted from Tk::ROText
+
+=cut
+
+sub Tk::Widget::ScrlMarkdown { shift->Scrolled('Markdown' => @_) }
 
 
 
@@ -376,3 +478,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =cut
 
 1; # End of Tk::Markdown
+
+
+# End

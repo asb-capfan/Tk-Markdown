@@ -24,6 +24,17 @@
   <li><a href="#METHODS">METHODS</a>
     <ul>
       <li><a href="#insert">insert</a></li>
+      <li><a href="#defaultStyles">defaultStyles</a></li>
+      <li><a href="#setStyles">setStyles</a></li>
+      <li><a href="#FormatMarkdown">FormatMarkdown</a></li>
+      <li><a href="#FormatMarkdownTable">FormatMarkdownTable</a></li>
+      <li><a href="#PaintMarkdown">PaintMarkdown</a></li>
+      <li><a href="#TransformTk">TransformTk</a></li>
+      <li><a href="#parseAttrs">parseAttrs</a></li>
+      <li><a href="#clipEvents">clipEvents</a></li>
+      <li><a href="#ClassInit">ClassInit</a></li>
+      <li><a href="#Populate">Populate</a></li>
+      <li><a href="#Tk::Widget::ScrlMardown">Tk::Widget::ScrlMardown</a></li>
     </ul>
   </li>
   <li><a href="#AUTHOR">AUTHOR</a></li>
@@ -50,6 +61,74 @@
 <p>Whenever insert is called on the Markdown, some translation is done on the text in order to diplay it nicely as markdown. Tables are reformatted (if the line starts with a bar) and headers are tagged with different fonts.</p>
 
 <p>This module is currently under development and there&#39;s plenty to do, e.g. links, images, etc.</p>
+
+<h2 id="defaultStyles">defaultStyles</h2>
+
+<p>Called internally. You can access the styles like this:</p>
+
+<pre><code><code>        <span class="keyword">use</span> <span class="variable">Data::Dumper</span><span class="operator">;</span>
+        <span class="keyword">print</span> <span class="variable">Dumper</span> <span class="variable">$o</span><span class="operator">-&gt;</span><span class="operator">{</span><span class="string">styles</span><span class="operator">}</span><span class="operator">;</span>
+</code></code></pre>
+
+<p>To set styles, use $o-&gt;setStyles</p>
+
+<h2 id="setStyles">setStyles</h2>
+
+<p>The argument is a hash of styles. The keys are predefined names, currently:</p>
+
+<dl>
+
+<dt id="body-item-h1-item-h2-item-h3-item-h4-item-h5-item-h6-item-code-item-list">body =item h1 =item h2 =item h3 =item h4 =item h5 =item h6 =item code =item list</dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>and the values are listrefs, in which the first element is the -foreground color, and the remainder are options for the Tk::Font object. For example:</p>
+
+<pre><code><code>        $o-&gt;setStyles(
+                &#39;h1&#39; =&gt; [ qw/ red -family Times -weight bold -size 32 / ],
+        )</code></code></pre>
+
+<h2 id="FormatMarkdown">FormatMarkdown</h2>
+
+<p>This is called internally. It prettifies markdown.</p>
+
+<h2 id="FormatMarkdownTable">FormatMarkdownTable</h2>
+
+<p>This is called internally. It prettifies markdown tables.</p>
+
+<h2 id="PaintMarkdown">PaintMarkdown</h2>
+
+<p>This is call internally. It applies the styles.</p>
+
+<h2 id="TransformTk">TransformTk</h2>
+
+<p>This is not called internally, and is scheduled for removal to another module (Tk::MarkdownTk). It parses out HTML-like tags that define Widgets to be drawn in the text.</p>
+
+<p>eg</p>
+
+<pre><code><code>        &lt;Tk::Button -text=&quot;Click Me&quot;&gt;</code></code></pre>
+
+<h2 id="parseAttrs">parseAttrs</h2>
+
+<p>A helper function for TransformTk.</p>
+
+<h2 id="clipEvents">clipEvents</h2>
+
+<p>This copied directly from Tk::ROText</p>
+
+<h2 id="ClassInit">ClassInit</h2>
+
+<p>This is copied directly from Tk::ROText.</p>
+
+<h2 id="Populate">Populate</h2>
+
+<p>This is copied and modified from Tk::ROText. The modification is the addition of a call to setDefaultStyles. That&#39;s all.</p>
+
+<h2 id="Tk::Widget::ScrlMardown">Tk::Widget::ScrlMardown</h2>
+
+<p>Copied and adapted from Tk::ROText</p>
 
 <h1 id="AUTHOR">AUTHOR</h1>
 

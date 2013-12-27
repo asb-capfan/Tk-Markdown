@@ -31,15 +31,15 @@
 
 # These definitions are from config.sh (via C:/Perl64/lib/Config.pm).
 # They may have been overridden via Makefile.PL or on the command line.
-AR = C:\Perl64\site\bin\ar.exe
-CC = C:\Perl64\site\bin\gcc.exe
+AR = C:\perl64\site\bin\ar.exe
+CC = C:\perl64\site\bin\gcc.exe
 CCCDLFLAGS =  
 CCDLFLAGS =  
 DLEXT = dll
 DLSRC = dl_win32.xs
 EXE_EXT = .exe
 FULL_AR = 
-LD = C:\Perl64\site\bin\g++.exe
+LD = C:\perl64\site\bin\g++.exe
 LDDLFLAGS = -mdll -L"C:\Perl64\lib\CORE"
 LDFLAGS = -L"C:\Perl64\lib\CORE"
 LIBC = msvcrt.lib
@@ -159,7 +159,7 @@ MM_REVISION = 66302
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
-MAKE = C:\Perl64\site\bin\dmake.exe
+MAKE = C:\perl64\site\bin\dmake.exe
 FULLEXT = Tk\Markdown
 BASEEXT = Markdown
 PARENT_NAME = Tk
@@ -503,7 +503,7 @@ realclean purge ::  clean realclean_subdirs
 metafile : create_distdir
 	$(NOECHO) $(ECHO) Generating META.yml
 	$(NOECHO) $(ECHO) --- > META_new.yml
-	$(NOECHO) $(ECHO) "abstract: 'The great new Tk::Markdown!'" >> META_new.yml
+	$(NOECHO) $(ECHO) "abstract: 'display markdown in a Text'" >> META_new.yml
 	$(NOECHO) $(ECHO) author: >> META_new.yml
 	$(NOECHO) $(ECHO) "  - 'JimiWills <jimi@webu.co.uk>'" >> META_new.yml
 	$(NOECHO) $(ECHO) build_requires: >> META_new.yml
@@ -527,7 +527,7 @@ metafile : create_distdir
 	-$(NOECHO) $(MV) META_new.yml $(DISTVNAME)/META.yml
 	$(NOECHO) $(ECHO) Generating META.json
 	$(NOECHO) $(ECHO) {{ > META_new.json
-	$(NOECHO) $(ECHO) "   \"abstract\" : \"The great new Tk::Markdown^!\"," >> META_new.json
+	$(NOECHO) $(ECHO) "   \"abstract\" : \"display markdown in a Text\"," >> META_new.json
 	$(NOECHO) $(ECHO) "   \"author\" : [" >> META_new.json
 	$(NOECHO) $(ECHO) "      \"JimiWills ^<jimi^@webu.co.uk^>\"" >> META_new.json
 	$(NOECHO) $(ECHO) "   ]," >> META_new.json
@@ -868,7 +868,7 @@ testdb_static :: testdb_dynamic
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
 	$(NOECHO) $(ECHO) "<SOFTPKG NAME=\"$(DISTNAME)\" VERSION=\"$(VERSION)\">" > $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) "    <ABSTRACT>The great new Tk::Markdown!</ABSTRACT>" >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) "    <ABSTRACT>display markdown in a Text</ABSTRACT>" >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) "    <AUTHOR>JimiWills &lt;jimi@webu.co.uk&gt;</AUTHOR>" >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) "    <IMPLEMENTATION>" >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) "        <PERLCORE VERSION=\"5,006,0,0\" />" >> $(DISTNAME).ppd

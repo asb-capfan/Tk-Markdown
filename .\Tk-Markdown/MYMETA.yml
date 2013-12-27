@@ -1,5 +1,5 @@
 ---
-abstract: 'The great new Tk::Markdown!'
+abstract: 'display markdown in a Text'
 author:
   - 'JimiWills <jimi@webu.co.uk>'
 build_requires:
