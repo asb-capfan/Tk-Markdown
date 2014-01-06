@@ -10,15 +10,32 @@ Tk::Markdown - display markdown in a Text
 
 =head1 VERSION
 
-Version 0.02
+Version 0.04
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.04';
+
+use base qw(Tk::Derived Tk::Text);
+use Tk::Font;
+#use Tk::Carp qw/fatalsToDialog warningsToDialog tkDeathsNonFatal/;
+## commented out tk carp cos it's not available in ppm!
+
+Construct Tk::Widget 'Markdown';
 
 
 =head1 SYNOPSIS
 
+
+  use Tk;
+  use Tk::MarkdownTk;
+
+  my $mw = new MainWindow();
+    my $mdt = $mw->MarkdownTk();
+
+  $mdt->insert(q{
+    some markdown here
+  });
 
 =head1 METHODS
 
@@ -35,12 +52,20 @@ there's plenty to do, e.g. links, images, etc.
 
 =cut
 
-use base qw(Tk::Derived Tk::Text);
-use Tk::Font;
-#use Tk::Carp qw/fatalsToDialog warningsToDialog tkDeathsNonFatal/;
-## commented out tk carp cos it's not available in ppm!
-
-Construct Tk::Widget 'Markdown';
+### add the processing functionality to the insert method
+sub insert
+{
+  my ($self,$index,$content) = @_;
+  my $res = $self->SUPER::insert($index,FormatMarkdown($content));
+  if(! $self->{inserting}){ ### don't allow recursion...
+    $self->{inserting} = 1;
+    $self->PaintMarkdown();
+#    $self->TransformTk();
+    $self->see("1.0");
+    $self->{inserting} = 0;
+  }
+  return $res;
+}
 
 
 
@@ -59,7 +84,7 @@ To set styles, use $o->setStyles
 
 ### named styles, used in _rules_ below.
 sub defaultStyles { 
-  my $self = shift;
+  my $self = shift;   
   my @sans = qw/-family Helvetica -size/;
   my @serif = qw/-family Times -size/;
   my @mono = qw/-family Courier -size/;
@@ -126,24 +151,13 @@ sub setStyles {
   $self->configure(-font=>$self->Font(@font),-foreground=>$color);
 }
 
-### add the processing functionality to the insert method
-sub insert
-{
-  my ($self,$index,$content) = @_;
-  my $res = $self->SUPER::insert($index,FormatMarkdown($content));
-  if(! $self->{inserting}){ ### don't allow recursion...
-    $self->{inserting} = 1;
-    $self->PaintMarkdown();
-#    $self->TransformTk();
-    $self->see("1.0");
-    $self->{inserting} = 0;
-  }
-  return $res;
-}
-
 =head2 FormatMarkdown
 
-This is called internally.  It prettifies markdown.
+This is called internally.  It prettifies markdown prior to insertion.
+
+<%  perl code here %> is interpretted here, so if you want to have perl
+code that results in formatted markdown, you'll need to put it inside
+<% %>  (as opposed to the <? ?> that will get run by MarkdownTk)
 
 =cut
 
@@ -219,6 +233,8 @@ sub FormatMarkdownTable {
 
 This is call internally.  It applies the styles.
 
+
+
 =cut
 
 
@@ -258,78 +274,6 @@ sub PaintMarkdown
     }
   }
 }
-
-=head2 TransformTk
-
-This is not called internally, and is scheduled for removal to another module 
-(Tk::MarkdownTk).  It parses out HTML-like tags that define Widgets to be drawn
-in the text.
-
-eg
-
-	<Tk::Button -text="Click Me">
-
-=cut
-
-### look for <tags> (the other kind of tags) to be tranformed into actual widgets
-sub TransformTk {
-  my $self = shift;
-  ### this is to find <tk::widget attributes>, or <? ?> script.
-  my $re = qr/<Tk\:\:\w+[^>]*>|<\?.*?\?>/s;
-  $self->FindAll('-regexp','-case', $re);
-  my @i = $self->tagRanges('sel');
-  #print map {"$_\n"} @i;
-  for(my $i = @i-2; $i >= 0; $i-=2){
-    my ($s,$e) = ($i[$i], $i[$i+1]);
-    my $string = $self->get($s,$e);
-    if($string =~ /<Tk\:\:(\w+)(.*)>/){
-      my ($w,$a) = ($1,$2);
-      my %a = parseAttrs($a);
-      $self->delete($s,$e);
-      my $t = $self->$w(%a);
-      $self->windowCreate($s,-window=>$t);
-    }
-    elsif($string =~ /<\?=(.*)\?>/s){
-      my $sub;
-      eval("\$sub = sub { $1 }");
-      die "$@ - somewhere in: $1" if $@;
-      $self->delete($s,$e);
-      $self->insert($s,&$sub());
-    }
-    elsif($string =~ /<\?(.*)\?>/s){
-      $self->delete($s,$e);
-      eval("$1");
-      die "$@ - somewhere in: $1" if $@;
-      die $@ if $@;
-    }
-  }
-}
-
-=head2 parseAttrs
-
-A helper function for TransformTk.
-
-=cut
-
-### parse some attributes
-sub parseAttrs {
-  my ($attrs) = @_;
-  my %attrs = ();
-  while($attrs =~ /\G.*?([\w-]+)(=""|=''|=".*?[^\\]"|='.*?[^\\]'|=[^"']\S*|)/g){
-    my ($k,$v) = ($1,$2);
-    $v ||= 1;
-    $v =~ s/^=//;
-    $v =~ s/^(["'])(.*)\1$/$2/;
-    if($k =~ /^-(?:command)$/){
-      eval(" \$v = sub { $v }; ");
-      die "$@ - somewhere in: $v" if $@;
-      #print "COMMAND: $v\n";
-    }
-    $attrs{$k} = $v;
-  }
-  return %attrs;
-}
-
 
 =head2 clipEvents
 
