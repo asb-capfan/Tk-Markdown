@@ -41,14 +41,10 @@ Construct Tk::Widget 'Markdown';
 
 =head2 insert
 
-Whenever insert is called on the Markdown, 
-some translation is done on the text in order to
-diplay it nicely as markdown.  Tables are reformatted
-(if the line starts with a bar) and headers are
-tagged with different fonts.
+Whenever insert is called on the Markdown, some translation is done on the text in order to display it nicely as markdown.
+Tables are reformatted (if the line starts with a bar) and headers are tagged with different fonts.
 
-This module is currently under development and
-there's plenty to do, e.g. links, images, etc.
+This module is currently under development and there's plenty to do, e.g. links, images, etc.
 
 =cut
 
@@ -73,12 +69,12 @@ sub insert
 
 =head2 defaultStyles 
 
-Called internally.  You can access the styles like this:
+Called internally. You can access the styles like this:
 
 	use Data::Dumper;
 	print Dumper $o->{styles};
 
-To set styles, use $o->setStyles
+To set styles, use C<$o-E<gt>setStyles>
 
 =cut
 
@@ -113,18 +109,26 @@ sub defaultStyles {
 
 =head2 setStyles
 
-The argument is a hash of styles.  The keys are predefined names, currently:
+The argument is a hash of styles. The keys are predefined names, currently:
 
 =over
 
 =item body
+
 =item h1
+
 =item h2
+
 =item h3
+
 =item h4
+
 =item h5
+
 =item h6
+
 =item code
+
 =item list
 
 =back
@@ -153,11 +157,9 @@ sub setStyles {
 
 =head2 FormatMarkdown
 
-This is called internally.  It prettifies markdown prior to insertion.
+This is called internally. It prettifies markdown prior to insertion.
 
-<%  perl code here %> is interpretted here, so if you want to have perl
-code that results in formatted markdown, you'll need to put it inside
-<% %>  (as opposed to the <? ?> that will get run by MarkdownTk)
+<% Perl code here %> is interpreted here, so if you want to have Perl code that results in formatted markdown, you'll need to put it inside <% %> (as opposed to the <? ?> that will get run by MarkdownTk)
 
 =cut
 
@@ -288,7 +290,7 @@ sub clipEvents
 
 =head2 ClassInit
 
-This is copied directly from Tk::ROText.
+This is copied directly from L<Tk::ROText>.
 
 =cut
 
@@ -324,7 +326,7 @@ sub Populate
 
 =head2 Tk::Widget::ScrlMardown
 
-Copied and adapted from Tk::ROText
+Copied and adapted from L<Tk::ROText>.
 
 =cut
 
@@ -338,9 +340,7 @@ JimiWills, C<< <jimi at webu.co.uk> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-tk-markdown at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Tk-Markdown>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Please report any bugs or feature requests via GitHub: L<https://github.com/asb-capfan/Tk-Markdown>
 
 
 
@@ -356,21 +356,9 @@ You can also look for information at:
 
 =over 4
 
-=item * RT: CPAN's request tracker (report bugs here)
+=item * GitHub (report bugs here):
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Tk-Markdown>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Tk-Markdown>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Tk-Markdown>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Tk-Markdown/>
+L<https://github.com/asb-capfan/Tk-Markdown>
 
 =back
 
