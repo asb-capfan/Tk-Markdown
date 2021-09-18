@@ -6,7 +6,7 @@ use warnings FATAL => 'all';
 
 =head1 NAME
 
-Tk::Markdown - display markdown in a Text
+Tk::Markdown - display Markdown in a Text
 
 =head1 VERSION
 
@@ -41,7 +41,7 @@ Construct Tk::Widget 'Markdown';
 
 =head2 insert
 
-Whenever insert is called on the Markdown, some translation is done on the text in order to display it nicely as markdown.
+Whenever insert is called on the Markdown, some translation is done on the text in order to display it nicely as Markdown.
 Tables are reformatted (if the line starts with a bar) and headers are tagged with different fonts.
 
 This module is currently under development and there's plenty to do, e.g. links, images, etc.
@@ -133,8 +133,8 @@ The argument is a hash of styles. The keys are predefined names, currently:
 
 =back
 
-and the values are listrefs, in which the first element is the -foreground color, and 
-the remainder are options for the Tk::Font object.  For example:
+And the values are listrefs, in which the first element is the C<-foreground> color, and the remainder are options for the L<Tk::Font> object.
+For example:
 
     $o->setStyles(
         'h1' => [ qw/ red -family Times -weight bold -size 32 / ],
@@ -186,7 +186,7 @@ sub FormatMarkdown
 
 =head2 FormatMarkdownTable
 
-This is called internally.  It prettifies markdown tables.
+This is called internally. It prettifies markdown tables.
 
 =cut
 
@@ -233,7 +233,7 @@ sub FormatMarkdownTable {
 
 =head2 PaintMarkdown
 
-This is call internally.  It applies the styles.
+This is call internally. It applies the styles.
 
 
 
@@ -308,8 +308,7 @@ sub ClassInit
 
 =head2 Populate
 
-This is copied and modified from Tk::ROText.  The modification is the addition
-of a call to setDefaultStyles.  That's all.
+This is copied and modified from Tk::ROText. The modification is the addition of a call to setDefaultStyles. That's all.
 
 =cut
 
