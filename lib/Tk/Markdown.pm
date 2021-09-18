@@ -29,10 +29,10 @@ Construct Tk::Widget 'Markdown';
 
   use Tk;
   use Tk::MarkdownTk;
-
+  
   my $mw = new MainWindow();
-    my $mdt = $mw->MarkdownTk();
-
+  my $mdt = $mw->MarkdownTk();
+  
   $mdt->insert(q{
     some markdown here
   });
