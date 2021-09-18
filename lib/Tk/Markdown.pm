@@ -8,10 +8,6 @@ use warnings FATAL => 'all';
 
 Tk::Markdown - display Markdown in a Text
 
-=head1 VERSION
-
-Version 0.05
-
 =cut
 
 our $VERSION = '0.06';
