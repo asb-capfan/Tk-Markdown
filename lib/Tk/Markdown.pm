@@ -231,7 +231,7 @@ sub FormatMarkdownTable {
 
 =head2 PaintMarkdown
 
-This is call internally. It applies the styles.
+This is called internally. It applies the styles.
 
 
 
