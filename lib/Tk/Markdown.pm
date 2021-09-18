@@ -71,8 +71,8 @@ sub insert
 
 Called internally. You can access the styles like this:
 
-	use Data::Dumper;
-	print Dumper $o->{styles};
+    use Data::Dumper;
+    print Dumper $o->{styles};
 
 To set styles, use C<$o-E<gt>setStyles>
 
@@ -136,9 +136,9 @@ The argument is a hash of styles. The keys are predefined names, currently:
 and the values are listrefs, in which the first element is the -foreground color, and 
 the remainder are options for the Tk::Font object.  For example:
 
-	$o->setStyles(
-		'h1' => [ qw/ red -family Times -weight bold -size 32 / ],
-	)
+    $o->setStyles(
+        'h1' => [ qw/ red -family Times -weight bold -size 32 / ],
+    )
 
 =cut
 
