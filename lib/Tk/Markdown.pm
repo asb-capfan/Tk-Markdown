@@ -15,13 +15,12 @@ our $VERSION = '0.06';
 use base qw(Tk::Derived Tk::Text);
 use Tk::Font;
 #use Tk::Carp qw/fatalsToDialog warningsToDialog tkDeathsNonFatal/;
-## commented out tk carp cos it's not available in ppm!
+## commented out Tk::carp because it is not available in ppm.
 
 Construct Tk::Widget 'Markdown';
 
 
 =head1 SYNOPSIS
-
 
   use Tk;
   use Tk::Markdown;
@@ -49,9 +48,11 @@ Construct Tk::Widget 'Markdown';
   
   $mdt->insert('0.0', $markdown);
 
+  
 =head1 DESCRIPTION
 
 Tk::Markdown is a widget to render L<Markdown|https://en.wikipedia.org/wiki/Markdown> in a L<Tk::Text> widget.
+
 
 =head1 METHODS
 
@@ -170,15 +171,17 @@ sub setStyles {
     $self->configure(-font=>$self->Font(@font),-foreground=>$color);
 }
 
+
 =head2 FormatMarkdown
 
-This is called internally. It prettifies markdown prior to insertion.
+This is called internally. It prettifies Markdown prior to insertion.
 
-<% Perl code here %> is interpreted here, so if you want to have Perl code that results in formatted markdown, you'll need to put it inside <% %> (as opposed to the <? ?> that will get run by L<Tk::MarkdownTk>)
+<% Perl code here %> is interpreted here.
+So if you want to have Perl code that results in formatted Markdown, you'll need to put it inside C<<% %>> (as opposed to the C<<? ?>> that will get run by L<Tk::MarkdownTk>)
 
 =cut
 
-### reformat the text of certain markdown components to make them prettier...
+### reformat the text of certain Markdown components to make them prettier...
 sub FormatMarkdown {
     my $markdown = shift;
     $markdown =~ s/<\%=(.*?)\%>/ my $v=$1; eval("\$v = sub{ $v }"); &$v()/ges;
@@ -198,9 +201,10 @@ sub FormatMarkdown {
     return $markdown;
 }
 
+
 =head2 FormatMarkdownTable
 
-This is called internally. It prettifies markdown tables.
+This is called internally. It prettifies Markdown tables.
 
 =cut
 
@@ -245,17 +249,14 @@ sub FormatMarkdownTable {
     return @table;
 }
 
+
 =head2 PaintMarkdown
 
 This is called internally. It applies the styles.
 
-
-
 =cut
 
-
-
-### Add tags and substitute some characters to format the markdown.
+### Add tags and substitute some characters to format the Markdown.
 sub PaintMarkdown {
     my $self = shift;
     my @rules = (
@@ -294,6 +295,7 @@ sub PaintMarkdown {
     }
 }
 
+
 =head2 clipEvents
 
 This copied directly from L<Tk::ROText>.
@@ -303,6 +305,7 @@ This copied directly from L<Tk::ROText>.
 sub clipEvents {
     return qw[Copy];
 }
+
 
 =head2 ClassInit
 
@@ -320,6 +323,7 @@ sub ClassInit {
     $class->clipboardOperations($mw,'Copy');
     return $val;
 }
+
 
 =head2 Populate
 
@@ -345,6 +349,10 @@ Copied and adapted from L<Tk::ROText>.
 
 sub Tk::Widget::ScrlMarkdown { shift->Scrolled('Markdown' => @_) }
 
+
+=head1 SEE ALSO
+
+L<Tk::MarkdownTk>, L<Tk::Text>
 
 
 =head1 AUTHOR
@@ -378,9 +386,6 @@ You can also look for information at:
 L<https://github.com/asb-capfan/Tk-Markdown>
 
 =back
-
-
-=head1 ACKNOWLEDGEMENTS
 
 
 =head1 LICENSE AND COPYRIGHT
@@ -427,6 +432,3 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =cut
 
 1; # End of Tk::Markdown
-
-
-# End
