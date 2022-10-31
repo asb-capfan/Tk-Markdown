@@ -24,23 +24,43 @@ Construct Tk::Widget 'Markdown';
 
 
   use Tk;
-  use Tk::MarkdownTk;
+  use Tk::Markdown;
   
-  my $mw = new MainWindow();
-  my $mdt = $mw->MarkdownTk();
+  my $mw = Tk::MainWindow->new();
+  my $mdt = $mw->Markdown();
   
-  $mdt->insert(q{
-    some markdown here
-  });
+  my $markdown = q~# Heading 1
+  ## Heading 2
+  ### Heading 3
+  #### Heading 4
+  ##### Heading 5
+  ###### Heading 6
+  
+  * list 1
+  ** list 2
+  *** list 3
+  **** list 4
+  ***** list 5
+  ****** list 6
+  
+      Source shown in monofont
+      another line of source code here
+  ~;
+  
+  $mdt->insert('0.0', $markdown);
+
+=head1 DESCRIPTION
+
+Tk::Markdown is a widget to render L<Markdown|https://en.wikipedia.org/wiki/Markdown> in a L<Tk::Text> widget.
 
 =head1 METHODS
 
 =head2 insert
 
-Whenever insert is called on the Markdown, some translation is done on the text in order to display it nicely as Markdown.
+Whenever insert is called on the Markdown widget, some translation is done on the text in order to display it nicely as Markdown.
 Tables are reformatted (if the line starts with a bar) and headers are tagged with different fonts.
 
-This module is currently under development and there's plenty to do, e.g. links, images, etc.
+This module has very basic support for Markdown and there is still plenty to do, e.g. links, images, etc.
 
 =cut
 
@@ -154,7 +174,7 @@ sub setStyles {
 
 This is called internally. It prettifies markdown prior to insertion.
 
-<% Perl code here %> is interpreted here, so if you want to have Perl code that results in formatted markdown, you'll need to put it inside <% %> (as opposed to the <? ?> that will get run by MarkdownTk)
+<% Perl code here %> is interpreted here, so if you want to have Perl code that results in formatted markdown, you'll need to put it inside <% %> (as opposed to the <? ?> that will get run by L<Tk::MarkdownTk>)
 
 =cut
 
@@ -303,7 +323,7 @@ sub ClassInit {
 
 =head2 Populate
 
-This is copied and modified from L<Tk::ROText>. The modification is the addition of a call to setDefaultStyles. That's all.
+This is copied and modified from L<Tk::ROText>. The modification is the addition of a call to C<setDefaultStyles>. That's all.
 
 =cut
 
@@ -317,7 +337,7 @@ sub Populate {
 }
 
 
-=head2 Tk::Widget::ScrlMardown
+=head2 Tk::Widget::ScrlMarkdown
 
 Copied and adapted from L<Tk::ROText>.
 
@@ -329,9 +349,13 @@ sub Tk::Widget::ScrlMarkdown { shift->Scrolled('Markdown' => @_) }
 
 =head1 AUTHOR
 
-JimiWills, C<< <jimi at webu.co.uk> >>
+Jimi Wills.
+
+Currently maintained by Alexander Becker.
 
 =head1 BUGS
+
+Known issue: Tables do not work.
 
 Please report any bugs or feature requests via GitHub: L<https://github.com/asb-capfan/Tk-Markdown>
 
