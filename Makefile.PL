@@ -8,7 +8,7 @@ WriteMakefile(
     'AUTHOR'           => q{Alexander Becker <asb@cpan.org>},
     'VERSION_FROM'     => 'lib/Tk/Markdown.pm',
     'ABSTRACT_FROM'    => 'lib/Tk/Markdown.pm',
-    'LICENSE'          => 'Artistic_2_0',
+    'LICENSE'          => 'artistic_2',
     'PL_FILES'         => {},
     'MIN_PERL_VERSION' => 5.006,
     'CONFIGURE_REQUIRES' => {
