@@ -5,7 +5,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     'NAME'             => 'Tk::Markdown',
-    'AUTHOR'           => q{JimiWills <jimi@webu.co.uk>},
+    'AUTHOR'           => q{Alexander Becker <asb@cpan.org>},
     'VERSION_FROM'     => 'lib/Tk/Markdown.pm',
     'ABSTRACT_FROM'    => 'lib/Tk/Markdown.pm',
     'LICENSE'          => 'Artistic_2_0',
