@@ -10,3 +10,4 @@ t/pod-coverage.t
 t/pod.t
 META.yml                                 Module meta-data (added by MakeMaker)
 eg/tk-marktown-sample.pl
+MANIFEST.SKIP
