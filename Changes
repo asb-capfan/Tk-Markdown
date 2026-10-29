@@ -1,6 +1,6 @@
 Revision history for Tk-Markdown
 
-0.09    Not yet released
+0.09    2026-10-29
         Security: treat embedded Perl blocks as literal text to prevent
         code execution when displaying untrusted Markdown.
 
